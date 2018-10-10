@@ -54,14 +54,11 @@ public abstract class AbstractDao<T extends DaoObject> implements Dao<T, Integer
     @Override
     public T saveOrUpdate(T object) throws SQLException {
         Connection conn = db.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM " + this.type);
         
-        if (findOne(object.getId() == null)) {
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM " + this.type);
-        }
         
-        stmt.close();
+        
         conn.close();
+        return null;
     }
 
     @Override
