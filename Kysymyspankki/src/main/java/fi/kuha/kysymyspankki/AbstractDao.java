@@ -67,6 +67,37 @@ public abstract class AbstractDao<T extends DaoObject> implements Dao<T, Integer
         return rv;
     }
     
+     public Integer findIdByColumnValues(List<String> column, List<String> target, List<Boolean> isString) throws SQLException {
+        Connection conn = db.getConnection();
+        
+        String str = "SELECT id FROM " + this.type + " WHERE ";
+        for (int i = 0; i < column.size(); i++) {
+            str += column.get(i) + " = ?";
+            if (i != column.size() - 1) {
+                str += " AND ";
+            } else {
+                str += ";";
+            }
+        }
+        
+        PreparedStatement stmt = conn.prepareStatement(str);
+        for (int i = 0; i < target.size(); i++) {
+            if (isString.get(i)) {
+                stmt.setString(i + 1, target.get(i));
+            } else {
+                stmt.setInt(i + 1, Integer.parseInt(target.get(i)));
+            }
+        }
+        ResultSet results = stmt.executeQuery();
+        Integer rv = null;
+        if (results.next()) {
+            rv = results.getInt("id");
+        }
+        stmt.close();
+        conn.close();
+        return rv;
+    }
+    
     public boolean resultSetNotEmpty (PreparedStatement stmt) {
         try {
             ResultSet results = stmt.executeQuery();

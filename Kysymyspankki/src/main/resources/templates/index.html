@@ -11,8 +11,19 @@
             <h2 th:text="${kurssi.nimi}">Hello</h2>
             <div th:each="aihe : ${kurssi.aiheet}">
                 <h4 th:text="${aihe.nimi}">World</h4>
+                <ul>
+                    <li th:each="kysymys : ${aihe.kysymykset}">
+                        <a th:href="@{./q/{kysymysId}/(kysymysId=${kysymys.id})}" th:text="${kysymys.teksti}"></a>
+                        <form method="POST" action="/delete">
+                            <input type="hidden" th:value="${kysymys.id}" name="kysymysId"/>
+                            <input type="submit" target="/delete" value="Poista"/>
+                        </form>
+                    </li>
+                </ul>
             </div>
         </div>
+        
+        <h1>Lis&auml;&auml; kysymys</h1>
         <form method="POST" action="/add">
             <table>
               <tr>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Kysymyspankki</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h2 th:text="${kysymys.teksti}">Foo</h2>
+        Kurssi: <span th:text="${kurssi.nimi}">Hello</span>
+        <p></p>
+        Aihe: <span th:text="${aihe.nimi}">Hello</span>
+        <ul>
+            <li th:each="vaihtoehto : ${kysymys.vaihtoehdot}">
+                <span th:text="${vaihtoehto.teksti}">Teksti</span> 
+                (<b th:text="${vaihtoehto.oikein} ? 'Oikein' : 'V&auml;&auml;rin'"></b>) 
+                (<a th:href="@{./delete/{vaihtoehtoId}/(vaihtoehtoId=${vaihtoehto.id})}">poista</a>)
+            </li>
+        </ul>
+        <p></p>
+        <h2>Luo uusi vastausvaihtoehto</h2>
+
+        <form method="POST">
+            <table>
+                <tr>
+                    <td>
+                        Vastausteksti:
+                    </td>
+                    <td>
+                        <input type="text" name="teksti"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Oikein:
+                    </td>
+                    <td>
+                        <input type="checkbox" name="tosi"/>
+                    </td>
+                </tr>
+            </table>
+
+            <input type="submit" value="Luo"/>
+        </form>
+        <p></p>
+        <a href="../../">Takaisin etusivulle</a>
+    </body>
+</html>
